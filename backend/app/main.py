@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
-from app.database import supabase
+from app.database import supabase, supabase_admin
 
 app = FastAPI(title="AI Todolist API")
 
@@ -43,3 +43,32 @@ def update_todo(todo_id: int, todo: TodoUpdate):
 def delete_todo(todo_id: int):
     res = supabase.table("Todolist - AI").delete().eq("id", todo_id).execute()
     return {"message": "Deleted"}
+class AuthRequest(BaseModel):
+    email: str
+    password: str
+
+@app.post("/register")
+def register(body: AuthRequest):
+    res = supabase_admin.auth.admin.create_user({
+        "email": body.email,
+        "password": body.password,
+        "email_confirm": True
+    })
+    return {"message": "Đăng ký thành công", "user_id": res.user.id}
+
+@app.post("/login")
+def login(body: AuthRequest):
+    res = supabase.auth.sign_in_with_password({
+        "email": body.email,
+        "password": body.password
+    })
+    return {
+        "access_token": res.session.access_token,
+        "user_id": res.user.id,
+        "email": res.user.email
+    }
+
+@app.post("/logout")
+def logout():
+    supabase.auth.sign_out()
+    return {"message": "Đăng xuất thành công"}  
