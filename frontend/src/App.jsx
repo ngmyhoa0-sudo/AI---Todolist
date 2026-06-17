@@ -6,6 +6,7 @@ const USER_ID = "user1";
 function App() {
     const [todos, setTodos] = useState([]);
     const [newTodo, setNewTodo] = useState("");
+    const [filter, setFilter] = useState("all");
 
     useEffect(() => {
         fetchTodos();
@@ -42,6 +43,13 @@ function App() {
         fetchTodos();
     };
 
+    // Lọc todo dựa theo filter đang chọn
+    const filteredTodos = todos.filter((todo) => {
+        if (filter === "active") return !todo.is_completed;
+        if (filter === "done") return todo.is_completed;
+        return true; // "all" → hiện tất cả
+    });
+
     return (
         <div style={{ maxWidth: "600px", margin: "40px auto", fontFamily: "Arial" }}>
             <h1>AI Todolist</h1>
@@ -54,25 +62,44 @@ function App() {
                     placeholder="Thêm todo mới..."
                     style={{ flex: 1, padding: "8px", fontSize: "16px" }}
                 />
-                <button onClick={addTodo} style={{ padding: "8px 16px" }}>
-                    Thêm
+                <button onClick={addTodo} style={{ padding: "8px 16px" }}>Thêm</button>
+            </div>
+
+            {/* Thanh lọc */}
+            <div style={{ display: "flex", gap: "8px", marginBottom: "16px" }}>
+                <button
+                    onClick={() => setFilter("all")}
+                    style={{ padding: "6px 16px", cursor: "pointer",
+                        background: filter === "all" ? "#333" : "#eee",
+                        color: filter === "all" ? "white" : "black",
+                        border: "none", borderRadius: "6px" }}>
+                    Tất cả
+                </button>
+                <button
+                    onClick={() => setFilter("active")}
+                    style={{ padding: "6px 16px", cursor: "pointer",
+                        background: filter === "active" ? "#333" : "#eee",
+                        color: filter === "active" ? "white" : "black",
+                        border: "none", borderRadius: "6px" }}>
+                    Đang làm
+                </button>
+                <button
+                    onClick={() => setFilter("done")}
+                    style={{ padding: "6px 16px", cursor: "pointer",
+                        background: filter === "done" ? "#333" : "#eee",
+                        color: filter === "done" ? "white" : "black",
+                        border: "none", borderRadius: "6px" }}>
+                    Đã xong
                 </button>
             </div>
 
             <ul style={{ listStyle: "none", padding: 0 }}>
-                {todos.map((todo) => (
-                    <li
-                        key={todo.id}
-                        style={{
-                            display: "flex",
-                            alignItems: "center",
-                            gap: "8px",
-                            padding: "10px",
-                            marginBottom: "8px",
-                            background: "#f5f5f5",
-                            borderRadius: "8px",
-                        }}
-                    >
+                {filteredTodos.map((todo) => (
+                    <li key={todo.id} style={{
+                        display: "flex", alignItems: "center", gap: "8px",
+                        padding: "10px", marginBottom: "8px",
+                        background: "#f5f5f5", borderRadius: "8px",
+                    }}>
                         <input
                             type="checkbox"
                             checked={todo.is_completed}
@@ -81,9 +108,7 @@ function App() {
                         <span style={{ flex: 1, textDecoration: todo.is_completed ? "line-through" : "none" }}>
                             {todo.title}
                         </span>
-                        <button onClick={() => deleteTodo(todo.id)} style={{ color: "red" }}>
-                            Xóa
-                        </button>
+                        <button onClick={() => deleteTodo(todo.id)} style={{ color: "red" }}>Xóa</button>
                     </li>
                 ))}
             </ul>
