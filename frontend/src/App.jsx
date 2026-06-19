@@ -1,9 +1,13 @@
 import { useState, useEffect } from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import LoginPage from "./pages/LoginPage";
+import ForgotPassword from "./pages/ForgotPassword";
 
 const API_URL = "http://127.0.0.1:8000";
 const USER_ID = "user1";
 
-function App() {
+// HomeTodo tạm thời đóng vai trò trang chính, chờ HomePage.jsx chính thức
+function HomeTodo() {
     const [todos, setTodos] = useState([]);
     const [newTodo, setNewTodo] = useState("");
 
@@ -88,6 +92,19 @@ function App() {
                 ))}
             </ul>
         </div>
+    );
+}
+
+// App.jsx chỉ làm 1 việc: điều hướng giữa các trang
+function App() {
+    return (
+        <BrowserRouter>
+            <Routes>
+                <Route path="/" element={<LoginPage />} />
+                <Route path="/forgot-password" element={<ForgotPassword />} />
+                <Route path="/home" element={<HomeTodo />} />
+            </Routes>
+        </BrowserRouter>
     );
 }
 
