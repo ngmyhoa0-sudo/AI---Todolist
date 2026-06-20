@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import TodoList from "../components/TodoList";
 import AddTaskForm from "../components/AddTaskForm";
 import FilterBar from "../components/FilterBar";
+import Notification from "../components/Notification";
+import StatsCard from "../components/StatsCard";
 import todoService from "../services/todoService";
 import aiService from "../services/aiService";
 
@@ -92,6 +94,12 @@ export default function HomePage() {
           </button>
         </div>
 
+        {/* Số liệu tổng quan */}
+        <StatsCard />
+
+        {/* Thông báo deadline */}
+        {!loading && !error && <Notification todos={todos} />}
+
         {/* Form thêm task */}
         <AddTaskForm onAdd={handleAdd} onAddNatural={handleAddNatural} />
 
@@ -129,7 +137,7 @@ const styles = {
     display: "flex",
     justifyContent: "space-between",
     alignItems: "center",
-    marginBottom: "24px",
+    marginBottom: "20px",
   },
   title: {
     fontSize: "22px",
