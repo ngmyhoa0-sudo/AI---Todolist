@@ -1,12 +1,19 @@
-import axios from "axios";
+import api from "./api";
 
 const API_URL = "http://localhost:8000";
 
 export const login = (data) =>
-  axios.post(`${API_URL}/auth/login`, data);
+api.post(`${API_URL}/auth/login`, data);
 
 export const register = (data) =>
-  axios.post(`${API_URL}/auth/register`, data);
+  api.post(`${API_URL}/auth/register`, data);
 
 export const forgotPassword = (email) =>
-  axios.post(`${API_URL}/auth/forgot-password`, { email });
+ api.post(`${API_URL}/auth/forgot-password`, { email });
+localStorage.setItem(
+  "token",
+  response.data.access_token
+);
+forgotPassword()
+
+resetPassword()
