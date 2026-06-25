@@ -1,6 +1,3 @@
-import axios from "axios";
+import api from "./api";
 
-const API_URL = "http://localhost:8000";
-
-export const getStats = () =>
-  axios.get(`${API_URL}/stats`);
+export const getStats = () => api.get("/stats");
