@@ -1,8 +1,7 @@
-import axios from "axios";
+import api from "./api";
 
-const API_URL = "http://localhost:8000";
+export const askAI = (message) => 
+  api.post("/ai/chat", { message });
 
-export const askAI = (message) =>
-	axios.post(`${API_URL}/ai/chat`, {
-		message,
-	});
+export const parseTask = (text) => 
+  api.post("/ai/parse-task", { text });
