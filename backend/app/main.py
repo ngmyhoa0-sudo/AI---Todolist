@@ -1,8 +1,14 @@
+from fastapi.security import HTTPBearer
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.routers import todos, auth, ai, chat_history, stats
 
-app = FastAPI(title="AI Todolist API")
+security = HTTPBearer()
+
+app = FastAPI(
+    title="AI Todolist API",
+    swagger_ui_parameters={"persistAuthorization": True}
+)
 
 app.add_middleware(
     CORSMiddleware,

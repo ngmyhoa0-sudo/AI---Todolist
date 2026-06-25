@@ -1,8 +1,7 @@
 from fastapi import APIRouter, Depends
-from app.schemas.todo import TodoCreate, TodoUpdate
-from app.database import supabase
+from ..schemas.todo import TodoCreate, TodoUpdate
+from ..database import supabase
 from ..dependencies import verify_token
-
 router = APIRouter(prefix="/todos", tags=["todos"])
 
 # Lấy danh sách task
