@@ -28,14 +28,11 @@ export default function StatsCard() {
   if (error) return <p style={styles.error}>{error}</p>;
   if (!stats) return null;
 
-  // Backend chỉ trả về total, completed, active — tính overdue từ frontend
-  const overdue = (stats.total ?? 0) - (stats.completed ?? 0) - (stats.active ?? 0);
-
   const cards = [
     { label: "Tổng task",  value: stats.total     ?? 0, color: "#111"    },
     { label: "Hoàn thành", value: stats.completed ?? 0, color: "#2d7a4f" },
     { label: "Đang làm",   value: stats.active    ?? 0, color: "#a36b00" },
-    { label: "Quá hạn",    value: overdue > 0 ? overdue : 0, color: "#d0453a" },
+    { label: "Quá hạn", value: stats.overdue ?? 0, color: "#d0453a" },
   ];
 
   return (
