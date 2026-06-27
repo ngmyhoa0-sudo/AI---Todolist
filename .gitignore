@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # Python
 backend/venv/
 backend/__pycache__/
@@ -11,7 +10,7 @@ frontend/node_modules/
 # Visual Studio
 .vs/
 backend/node_modules/
-=======
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[codz]
@@ -230,4 +229,6 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
->>>>>>> a383998fc924ca4211748c8e06a441194eba9339
+
+# Java (Thực hành tuần)
+Thực hành tuần/out/
