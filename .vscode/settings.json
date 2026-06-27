@@ -1,0 +1,8 @@
+{
+    "java.project.sourcePaths": [
+        "Thực hành tuần"
+    ],
+    "java.project.referencedLibraries": [
+        "Thực hành tuần/lib/**/*.jar"
+    ]
+}
