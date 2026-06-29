@@ -28,7 +28,7 @@ export default function HomePage() {
     setError("");
     try {
       const data = await getTodos();
-      setTodos(data);
+      setTodos(data.data);
     } catch (err) {
       setError(err.message || "Không tải được danh sách task.");
     } finally {
@@ -42,7 +42,7 @@ export default function HomePage() {
   };
 
   const handleAddNatural = async (text) => {
-    await parseTask({ text });
+    await parseTask(text);
     await loadTodos();
   };
 

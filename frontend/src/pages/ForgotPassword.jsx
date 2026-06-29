@@ -27,7 +27,7 @@ export default function ForgotPassword() {
     setError("");
     setLoading(true);
     try {
-      await authService.forgotPassword({ email });
+      await authService.forgotPassword(email);
       setSuccessMsg("Mã OTP đã được gửi đến email của bạn.");
       setStep("otp");
     } catch (err) {
