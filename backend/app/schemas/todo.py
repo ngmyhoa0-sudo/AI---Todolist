@@ -4,7 +4,8 @@ from datetime import datetime
 
 # Schema khi tạo task mới
 class TodoCreate(BaseModel):
-    deadline: Optional[datetime] = None 
+    title: str
+    deadline: Optional[datetime] = None
 
 # Schema khi cập nhật task
 class TodoUpdate(BaseModel):

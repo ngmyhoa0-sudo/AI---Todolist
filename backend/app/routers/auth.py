@@ -1,4 +1,4 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, HTTPException
 from app.schemas.auth import UserRegister, UserLogin, ForgotPassword, ResetPassword
 from app.database import supabase
 
@@ -33,3 +33,16 @@ def logout():
 def forgot_password(body: ForgotPassword):
     supabase.auth.reset_password_email(body.email)
     return {"message": "Email đặt lại mật khẩu đã được gửi!"}
+
+@router.post("/reset-password")
+def reset_password(body: ResetPassword):
+    try:
+        res = supabase.auth.verify_otp({
+            "email": body.email,
+            "token": body.otp,
+            "type": "recovery"
+        })
+        supabase.auth.update_user({"password": body.new_password})
+        return {"message": "Đặt lại mật khẩu thành công!"}
+    except Exception as e:
+        raise HTTPException(status_code=400, detail="Mã OTP không đúng hoặc đã hết hạn")

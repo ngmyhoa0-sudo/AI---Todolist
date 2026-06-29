@@ -14,11 +14,11 @@ def get_stats(user=Depends(verify_token)):
     completed = len([t for t in tasks if t["is_completed"]])
     active = total - completed
     overdue = len([
-    t for t in tasks
-    if not t["is_completed"]
-    and t["deadline"]
-    and datetime.fromisoformat(t["deadline"]) < datetime.now(timezone.utc)
-])
+        t for t in tasks
+        if not t["is_completed"]
+        and t["deadline"]
+        and datetime.fromisoformat(t["deadline"]).replace(tzinfo=timezone.utc) < datetime.now(timezone.utc)
+    ])
 
     return {
         "total": total,
